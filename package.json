@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3",
+    "@truffle/hdwallet-provider": "^2.1.15",
+    "react-router-dom": "^7.5.0"
+  },
+  "devDependencies": {
+    "ganache-cli": "^6.12.2"
+  }
+}
