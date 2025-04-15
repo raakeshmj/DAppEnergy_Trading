@@ -32,7 +32,7 @@ A blockchain-based peer-to-peer energy trading platform that enables prosumers t
 2. Start Ganache:
    - Launch Ganache
    - Create a new workspace
-   - Configure RPC Server to run on `HTTP://127.0.0.1:7545`
+   - Configure RPC Server to run on `HTTP://127.0.0.1:8545`
 
 3. Deploy contracts:
    ```bash
