@@ -51,7 +51,7 @@ const ViewListings = ({ web3, account }) => {
   };
 
   const handleBid = async () => {
-    if (!selectedListing || !bidAmount) return;
+    if (!selectedListing) return;
 
     setBidLoading(true);
     setError('');

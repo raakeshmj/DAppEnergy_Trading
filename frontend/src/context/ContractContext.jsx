@@ -53,7 +53,6 @@ export const ContractProvider = ({ children, web3, account }) => {
 
         // Get contract instances
         const tradingPlatformNetwork = EnergyTradingPlatformContract.networks[networkId];
-        console.log("TradingPlatformNetwork:", tradingPlatformNetwork);
         const energyTokenNetwork = EnergyTokenContract.networks[networkId];
         const userRegistryNetwork = UserRegistryContract.networks[networkId];
 
@@ -61,19 +60,28 @@ export const ContractProvider = ({ children, web3, account }) => {
           throw new Error('One or more contracts not deployed to the current network');
         }
 
+        // Configure web3 to use legacy transactions
+        const options = {
+          transactionType: 0, // Legacy transaction type
+          transactionConfirmationBlocks: 1
+        };
+
         const tradingPlatform = new web3.eth.Contract(
           EnergyTradingPlatformContract.abi,
-          tradingPlatformNetwork.address
+          tradingPlatformNetwork.address,
+          options
         );
 
         const energyToken = new web3.eth.Contract(
           EnergyTokenContract.abi,
-          energyTokenNetwork.address
+          energyTokenNetwork.address,
+          options
         );
 
         const userRegistry = new web3.eth.Contract(
           UserRegistryContract.abi,
-          userRegistryNetwork.address
+          userRegistryNetwork.address,
+          options
         );
 
         setContracts({
