@@ -1,0 +1,88 @@
+/* Dashboard.css */
+body {
+    background: linear-gradient(120deg, #020c1a, #0b1b3c, #020c1a);
+    background-size: 400% 400%;
+    animation: dashboardShift 30s ease infinite;
+    color: #e0f7ff;
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  @keyframes dashboardShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .hero-section {
+    text-align: center;
+    padding: 80px 20px;
+    background: radial-gradient(circle at center, #001229, #000000);
+    color: #e0f7ff;
+  }
+  
+  .hero-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  
+  .convert-icon {
+    width: 60px;
+    margin: 0 20px;
+    filter: drop-shadow(0 0 8px #00d0ff88);
+  }
+  
+  .spark-logo {
+    width: 100px;
+    animation: sparkPulse 3s infinite ease-in-out;
+    filter: drop-shadow(0 0 20px #00d0ff);
+  }
+  
+  .cta-button {
+    margin-top: 30px;
+    background: linear-gradient(90deg, #00d0ff, #004aad);
+    color: white;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0 0 20px #00d0ff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    box-shadow: 0 0 30px #00d0ff, 0 0 40px #00d0ff;
+    transform: scale(1.05);
+  }
+  
+  .dashboard-section {
+    margin-top: 50px;
+  }
+  
+  .glow-box {
+    background: rgba(10, 15, 30, 0.95);
+    border: 1px solid #00d0ff33;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 0 20px #00d0ff22;
+    transition: all 0.3s ease;
+    color: #e0f7ff;
+  }
+  
+  .glow-box:hover {
+    box-shadow: 0 0 35px #00d0ff88;
+    transform: translateY(-5px);
+  }
+  
+  .clickable {
+    cursor: pointer;
+  }
+  
+  @keyframes sparkPulse {
+    0% { transform: scale(1); filter: drop-shadow(0 0 10px #00d0ff); }
+    50% { transform: scale(1.1); filter: drop-shadow(0 0 25px #00d0ff); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 10px #00d0ff); }
+  }
+  

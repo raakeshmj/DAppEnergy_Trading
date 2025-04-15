@@ -1,0 +1,92 @@
+.app-root {
+    background: linear-gradient(145deg, #000814, #06142e, #000814);
+    background-size: 400% 400%;
+    animation: backgroundShift 20s ease infinite;
+    min-height: 100vh;
+    color: #e0f7ff;
+    font-family: 'Orbitron', sans-serif;
+    overflow-x: hidden;
+  }
+  
+  @keyframes backgroundShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .hero-section {
+    text-align: center;
+    padding: 5rem 1rem 3rem;
+    background: radial-gradient(circle at top center, #0b1e40 0%, #000814 100%);
+    color: #e0f7ff;
+  }
+  
+  .hero-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1.5rem;
+  }
+  
+  .spark-logo {
+    width: 100px;
+    filter: drop-shadow(0 0 20px #00d0ffcc);
+    animation: sparkPulse 3s infinite ease-in-out;
+  }
+  
+  .convert-icon {
+    width: 60px;
+    opacity: 0.75;
+    filter: drop-shadow(0 0 8px #00d0ff55);
+  }
+  
+  .cta-button {
+    margin-top: 2rem;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(90deg, #00d0ff, #004aad);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 0 20px #00d0ff88;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px #00d0ff, 0 0 40px #00d0ff77;
+  }
+  
+  .dashboard-section {
+    padding: 3rem 1rem;
+  }
+  
+  .glow-box {
+    background: rgba(0, 8, 20, 0.9);
+    border: 1px solid #00d0ff44;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 0 25px #00d0ff33;
+    color: #e0f7ff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .clickable {
+    cursor: pointer;
+  }
+  
+  .clickable:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 35px #00d0ffaa;
+  }
+  
+  @keyframes sparkPulse {
+    0% { transform: scale(1); filter: drop-shadow(0 0 10px #00d0ff); }
+    50% { transform: scale(1.1); filter: drop-shadow(0 0 25px #00d0ff); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 10px #00d0ff); }
+  }
+  
+  

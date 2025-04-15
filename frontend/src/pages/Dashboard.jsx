@@ -1,7 +1,7 @@
-import React from'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Grid, Paper, Typography, Box, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import '../styles/Dashboard.css';
 
 const Dashboard = ({ web3, account }) => {
   const [userInfo, setUserInfo] = useState(null);
@@ -13,24 +13,21 @@ const Dashboard = ({ web3, account }) => {
       if (!web3 || !account) return;
 
       try {
-        // Load contract ABIs
         const response = await fetch('/build/contracts/UserRegistry.json');
         const UserRegistryContract = await response.json();
-        
-        // Create contract instances
+
         const networkId = await web3.eth.net.getId();
         const networkData = UserRegistryContract.networks[networkId];
-        
+
         if (!networkData) {
           throw new Error('Smart contract not deployed to detected network');
         }
-        
+
         const userRegistry = new web3.eth.Contract(
           UserRegistryContract.abi,
           networkData.address
         );
 
-        // Get user information
         const user = await userRegistry.methods.getUser(account).call();
         setUserInfo(user);
       } catch (error) {
@@ -62,10 +59,10 @@ const Dashboard = ({ web3, account }) => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <Container maxWidth="lg" className="dashboard-section">
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+          <Paper className="glow-box">
             <Typography variant="h6" gutterBottom>
               Account Overview
             </Typography>
@@ -79,17 +76,7 @@ const Dashboard = ({ web3, account }) => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Paper
-            sx={{
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              height: 240,
-              cursor: 'pointer',
-              '&:hover': { bgcolor: 'action.hover' },
-            }}
-            onClick={() => navigate('/create-listing')}
-          >
+          <Paper className="glow-box clickable" onClick={() => navigate('/create-listing')}>
             <Typography variant="h6" gutterBottom>
               Sell Energy
             </Typography>
@@ -100,17 +87,7 @@ const Dashboard = ({ web3, account }) => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Paper
-            sx={{
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              height: 240,
-              cursor: 'pointer',
-              '&:hover': { bgcolor: 'action.hover' },
-            }}
-            onClick={() => navigate('/view-listings')}
-          >
+          <Paper className="glow-box clickable" onClick={() => navigate('/view-listings')}>
             <Typography variant="h6" gutterBottom>
               Buy Energy
             </Typography>

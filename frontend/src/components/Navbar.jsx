@@ -1,40 +1,36 @@
-import React from'react';
-import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import WalletConnect from './WalletConnect';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import '../styles/Navbar.css'; // Adjust if your path differs
+import logo from '../public/images/Logo1.png'; // Adjust if your path differs
 
 const Navbar = ({ account }) => {
-  const navigate = useNavigate();
-
-  const handleConnect = async () => {
-    if (window.ethereum) {
-      try {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-      } catch (error) {
-        console.error('User denied account access');
-      }
-    } else {
-      console.log('Please install MetaMask!');
-    }
-  };
+  const shortAddress = account ? `${account.slice(0, 6)}...${account.slice(-4)}` : '';
 
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer' }} onClick={() => navigate('/')}>
-          Energy Trading Platform
-        </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Button color="inherit" onClick={() => navigate('/create-listing')}>
-            Sell Energy
-          </Button>
-          <Button color="inherit" onClick={() => navigate('/view-listings')}>
-            Buy Energy
-          </Button>
-          <WalletConnect account={account} onConnect={handleConnect} />
-        </Box>
-      </Toolbar>
-    </AppBar>
+    <nav className="neon-navbar">
+      <div className="navbar-left">
+        <Link to="/">
+          <img src={logo} alt="DegenWatts Logo" className="navbar-logo-glow" />
+        </Link>
+      </div>
+
+      <div className="navbar-links">
+        <Link to="/dashboard">Dashboard</Link>
+        <Link to="/create-listing">Sell Energy</Link>
+        <Link to="/view-listings">Buy Energy</Link>
+      </div>
+
+      <div className="navbar-right">
+        {account ? (
+          <div className="wallet-connected">
+            <span className="wallet-status-glow" />
+            {shortAddress}
+          </div>
+        ) : (
+          <button className="connect-wallet-btn">Connect Wallet</button>
+        )}
+      </div>
+    </nav>
   );
 };
 
