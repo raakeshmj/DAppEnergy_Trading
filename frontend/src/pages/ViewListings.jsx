@@ -1,6 +1,16 @@
-import React from'react';
-import { useState, useEffect } from 'react';
-import { Container, Grid, Card, CardContent, Typography, Button, CircularProgress, Alert, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import Web3 from 'web3';
+import {
+  Container,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  CircularProgress,
+  Alert,
+  Chip,
+} from '@mui/material';
 import { useContracts } from '../context/ContractContext';
 
 const ViewListings = ({ web3, account }) => {
@@ -8,88 +18,70 @@ const ViewListings = ({ web3, account }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [selectedListing, setSelectedListing] = useState(null);
-  const [bidDialogOpen, setBidDialogOpen] = useState(false);
-  const [bidLoading, setBidLoading] = useState(false);
+  const [buyingId, setBuyingId] = useState(null);
 
   useEffect(() => {
     loadListings();
   }, [web3, account]);
 
   const loadListings = async () => {
-    if (!web3 || !account) return;
+    if (!web3 || !account || !tradingPlatform) return;
 
     try {
-      if (!tradingPlatform) {
-        throw new Error('Trading platform contract not initialized');
-      }
-
-      // Get total number of listings
       const listingCount = await tradingPlatform.methods.listingCounter().call();
-      
-      // Load all active listings
-      const activeListings = [];
+      const allListings = [];
+
       for (let i = 1; i <= listingCount; i++) {
         const listing = await tradingPlatform.methods.listings(i).call();
-        if (listing.isActive) {
-          activeListings.push({
-            ...listing,
-            id: i,
-            energyAmount: web3.utils.fromWei(listing.energyAmount, 'ether'),
-            pricePerUnit: web3.utils.fromWei(listing.pricePerUnit, 'ether')
-          });
-        }
+        allListings.push({
+          ...listing,
+          id: i,
+          energyAmount: listing.energyAmount,
+          pricePerUnit: listing.pricePerUnit,
+        });
       }
 
-      setListings(activeListings);
-    } catch (error) {
-      console.error('Error loading listings:', error);
+      setListings(allListings);
+    } catch (err) {
+      console.error('Error loading listings:', err);
       setError('Error loading listings');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleBid = async () => {
-    if (!selectedListing) return;
-
-    setBidLoading(true);
-    setError('');
-
+  const handlePurchase = async (listing) => {
     try {
-      if (!tradingPlatform) {
-        throw new Error('Trading platform contract not initialized');
-      }
+      setBuyingId(listing.id);
+      setError('');
 
-      const totalPrice = web3.utils.toBN(selectedListing.energyAmount)
-        .mul(web3.utils.toBN(selectedListing.pricePerUnit))
-        .toString();
+      const totalPriceWei = (
+        (BigInt(listing.energyAmount) * BigInt(listing.pricePerUnit)) /
+        BigInt(1e18)
+      ).toString();
 
       await tradingPlatform.methods
-        .placeBid(selectedListing.id)
-        .send({ from: account, value: totalPrice });
+        .purchaseListing(listing.id)
+        .send({ from: account, value: totalPriceWei });
 
-      setBidDialogOpen(false);
-      loadListings(); // Refresh listings
-    } catch (error) {
-      console.error('Error placing bid:', error);
-      setError(error.message || 'Error placing bid');
+      await loadListings(); // Refresh listings after purchase
+    } catch (err) {
+      console.error('Purchase failed:', err);
+      setError(err.message || 'Failed to purchase listing');
     } finally {
-      setBidLoading(false);
+      setBuyingId(null);
     }
   };
 
   if (!web3 || !account) {
     return (
       <Container maxWidth="lg" sx={{ mt: 4 }}>
-        <Alert severity="warning">
-          Please connect your wallet to view energy listings
-        </Alert>
+        <Alert severity="warning">Please connect your wallet to view energy listings</Alert>
       </Container>
     );
   }
 
-  if (loading) {
+  if (loading || contractLoading) {
     return (
       <Container sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
         <CircularProgress />
@@ -100,7 +92,7 @@ const ViewListings = ({ web3, account }) => {
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Typography variant="h4" gutterBottom>
-        Available Energy Listings
+        Energy Listings
       </Typography>
 
       {error && (
@@ -110,59 +102,57 @@ const ViewListings = ({ web3, account }) => {
       )}
 
       <Grid container spacing={3}>
-        {listings.map((listing) => (
-          <Grid item xs={12} sm={6} md={4} key={listing.id}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Energy Amount: {listing.energyAmount} ETH
-                </Typography>
-                <Typography color="textSecondary">
-                  Price per Unit: {listing.pricePerUnit} ETH
-                </Typography>
-                <Typography color="textSecondary">
-                  Seller: {listing.seller.slice(0, 6)}...{listing.seller.slice(-4)}
-                </Typography>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  sx={{ mt: 2 }}
-                  onClick={() => {
-                    setSelectedListing(listing);
-                    setBidDialogOpen(true);
-                  }}
-                  disabled={listing.seller === account}
-                >
-                  Place Bid
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+        {listings.map((listing) => {
+          const totalPriceEth = (
+            Number(web3.utils.fromWei(listing.energyAmount, 'ether')) *
+            Number(web3.utils.fromWei(listing.pricePerUnit, 'ether'))
+          ).toFixed(4);
 
-      <Dialog open={bidDialogOpen} onClose={() => setBidDialogOpen(false)}>
-        <DialogTitle>Place Bid</DialogTitle>
-        <DialogContent>
-          <Typography gutterBottom>
-            Total Price: {selectedListing ? 
-              (parseFloat(selectedListing.energyAmount) * parseFloat(selectedListing.pricePerUnit)).toFixed(4) : 0} ETH
-          </Typography>
-          <Typography variant="caption" color="textSecondary">
-            This amount will be locked in the smart contract until the seller accepts or rejects your bid.
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setBidDialogOpen(false)}>Cancel</Button>
-          <Button
-            onClick={handleBid}
-            variant="contained"
-            disabled={bidLoading}
-          >
-            {bidLoading ? <CircularProgress size={24} /> : 'Confirm Bid'}
-          </Button>
-        </DialogActions>
-      </Dialog>
+          const isSold = !listing.isActive;
+          const isSeller = listing.seller === account;
+
+          return (
+            <Grid item xs={12} sm={6} md={4} key={listing.id}>
+              <Card sx={{ opacity: isSold ? 0.6 : 1 }}>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    Energy: {web3.utils.fromWei(listing.energyAmount, 'ether')} ETH
+                  </Typography>
+                  <Typography color="textSecondary">
+                    Price per Unit: {web3.utils.fromWei(listing.pricePerUnit, 'ether')} ETH
+                  </Typography>
+                  <Typography color="textSecondary">
+                    Seller: {listing.seller.slice(0, 6)}...{listing.seller.slice(-4)}
+                  </Typography>
+                  <Typography sx={{ mt: 1, fontWeight: 'bold' }}>
+                    Total Price: {totalPriceEth} ETH
+                  </Typography>
+
+                  {isSold ? (
+                    <Chip label="SOLD" color="error" sx={{ mt: 2 }} />
+                  ) : !isSeller ? (
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      sx={{ mt: 2 }}
+                      onClick={() => handlePurchase(listing)}
+                      disabled={buyingId === listing.id}
+                    >
+                      {buyingId === listing.id ? (
+                        <CircularProgress size={24} color="inherit" />
+                      ) : (
+                        'Buy Now'
+                      )}
+                    </Button>
+                  ) : (
+                    <Chip label="Your Listing" color="info" sx={{ mt: 2 }} />
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+          );
+        })}
+      </Grid>
     </Container>
   );
 };

@@ -163,13 +163,13 @@ const CreateListing = ({ web3, account }) => {
           <form onSubmit={handleSubmit}>
             <TextField
               fullWidth
-              label="Energy Amount (ETH)"
+              label="Energy Amount (KWh)"
               type="number"
               value={energyAmount}
               onChange={(e) => setEnergyAmount(e.target.value)}
               margin="normal"
               required
-              className="glass-input"
+              inputProps={{ min: '0', step: '1' }}
             />
             <TextField
               fullWidth
@@ -179,6 +179,7 @@ const CreateListing = ({ web3, account }) => {
               onChange={(e) => setPricePerUnit(e.target.value)}
               margin="normal"
               required
+              inputProps={{ min: '0', step: '0.0001' }}
               className="glass-input"
             />
             <Box mt={3}>
