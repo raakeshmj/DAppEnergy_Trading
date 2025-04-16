@@ -40,6 +40,16 @@
     font-size: 1rem;
     color: #cfd8dc;
   }
+  .spark-logo {
+    width: 150px; /* You can tweak this size */
+    height: auto;
+    margin: 0 1rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .spark-logo:hover {
+    transform: scale(1.1);
+  }
   
   .cta-button {
     padding: 0.75rem 2rem;
