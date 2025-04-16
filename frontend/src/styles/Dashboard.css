@@ -1,88 +1,119 @@
-/* Dashboard.css */
-body {
-    background: linear-gradient(120deg, #020c1a, #0b1b3c, #020c1a);
-    background-size: 400% 400%;
-    animation: dashboardShift 30s ease infinite;
-    color: #e0f7ff;
-    font-family: 'Orbitron', sans-serif;
+.dashboard-section {
+  margin-top: 50px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* === Glass Card Base === */
+.glass-card {
+  background: linear-gradient(145deg, rgba(0, 18, 41, 0.6), rgba(0, 10, 30, 0.7));
+  border-radius: 24px;
+  padding: 28px;
+  border: 1px solid rgba(0, 208, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 208, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #ffffff;
+  transition: 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0, 208, 255, 0.15), transparent 70%);
+  animation: pulseGlow 6s infinite linear;
+  z-index: 0;
+}
+
+@keyframes pulseGlow {
+  0% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(360deg) scale(1.1); }
+}
+
+.glass-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 0 40px rgba(0, 208, 255, 0.4);
+}
+
+/* === Neon Buttons === */
+.glow-button {
+  margin-top: 16px;
+  background: linear-gradient(90deg, #ffffff, #cccccc);
+  color: #000;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
+  transition: all 0.35s ease;
+  z-index: 1;
+}
+
+.glow-button:hover {
+  background: linear-gradient(90deg, #fff, #e6e6e6);
+  box-shadow: 0 0 30px #ffffff, 0 0 50px #ffffff;
+  transform: scale(1.07);
+  color: black;
+}
+
+/* === Animated Icons === */
+.card-icon {
+  font-size: 36px;
+  margin-right: 12px;
+  color: black;
+  transition: transform 0.3s ease;
+  animation: iconPulse 2.5s infinite ease-in-out;
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.icon-title:hover .card-icon {
+  transform: scale(1.2);
+}
+
+/* === Buy Section Styling === */
+.buy-section {
+  background: rgba(0, 255, 170, 0.12);
+  border: 1px solid #00ffcc;
+  color: #ffffff;
+}
+
+.buy-section .card-icon {
+  filter: drop-shadow(0 0 6px #00ffcc);
+}
+
+/* === Sell Section Styling === */
+.sell-section {
+  background: rgba(255, 0, 150, 0.12);
+  border: 1px solid #ff00dd;
+  color: #ffffff;
+}
+
+.sell-section .card-icon {
+  filter: drop-shadow(0 0 6px #ff00aa);
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 20px;
   }
-  
-  @keyframes dashboardShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+
+  .card-icon {
+    font-size: 30px;
   }
-  
-  .hero-section {
+
+  .glow-button {
+    width: 100%;
     text-align: center;
-    padding: 80px 20px;
-    background: radial-gradient(circle at center, #001229, #000000);
-    color: #e0f7ff;
   }
-  
-  .hero-icons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 40px;
-  }
-  
-  .convert-icon {
-    width: 60px;
-    margin: 0 20px;
-    filter: drop-shadow(0 0 8px #00d0ff88);
-  }
-  
-  .spark-logo {
-    width: 100px;
-    animation: sparkPulse 3s infinite ease-in-out;
-    filter: drop-shadow(0 0 20px #00d0ff);
-  }
-  
-  .cta-button {
-    margin-top: 30px;
-    background: linear-gradient(90deg, #00d0ff, #004aad);
-    color: white;
-    padding: 12px 28px;
-    border: none;
-    border-radius: 30px;
-    box-shadow: 0 0 20px #00d0ff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s ease;
-  }
-  
-  .cta-button:hover {
-    box-shadow: 0 0 30px #00d0ff, 0 0 40px #00d0ff;
-    transform: scale(1.05);
-  }
-  
-  .dashboard-section {
-    margin-top: 50px;
-  }
-  
-  .glow-box {
-    background: rgba(10, 15, 30, 0.95);
-    border: 1px solid #00d0ff33;
-    border-radius: 20px;
-    padding: 24px;
-    box-shadow: 0 0 20px #00d0ff22;
-    transition: all 0.3s ease;
-    color: #e0f7ff;
-  }
-  
-  .glow-box:hover {
-    box-shadow: 0 0 35px #00d0ff88;
-    transform: translateY(-5px);
-  }
-  
-  .clickable {
-    cursor: pointer;
-  }
-  
-  @keyframes sparkPulse {
-    0% { transform: scale(1); filter: drop-shadow(0 0 10px #00d0ff); }
-    50% { transform: scale(1.1); filter: drop-shadow(0 0 25px #00d0ff); }
-    100% { transform: scale(1); filter: drop-shadow(0 0 10px #00d0ff); }
-  }
-  
+}

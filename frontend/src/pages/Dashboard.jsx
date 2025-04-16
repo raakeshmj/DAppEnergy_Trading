@@ -1,5 +1,19 @@
+// src/components/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Paper, Typography, Box, CircularProgress } from '@mui/material';
+import {
+  Container,
+  Grid,
+  Paper,
+  Typography,
+  Box,
+  CircularProgress,
+  Button,
+} from '@mui/material';
+import {
+  AccountCircle,
+  Bolt,
+  ShoppingCart,
+} from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Dashboard.css';
 
@@ -60,12 +74,13 @@ const Dashboard = ({ web3, account }) => {
 
   return (
     <Container maxWidth="lg" className="dashboard-section">
-      <Grid container spacing={3}>
+      <Grid container spacing={4}>
         <Grid item xs={12}>
-          <Paper className="glow-box">
-            <Typography variant="h6" gutterBottom>
-              Account Overview
-            </Typography>
+          <Paper className="glass-card">
+            <Box className="icon-title">
+              <AccountCircle className="card-icon" />
+              <Typography variant="h6">Account Overview</Typography>
+            </Box>
             <Typography>
               Account Type: {userInfo?.isProducer ? 'Energy Producer' : 'Energy Consumer'}
             </Typography>
@@ -76,24 +91,32 @@ const Dashboard = ({ web3, account }) => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Paper className="glow-box clickable" onClick={() => navigate('/create-listing')}>
-            <Typography variant="h6" gutterBottom>
-              Sell Energy
-            </Typography>
+          <Paper className="glass-card sell-section">
+            <Box className="icon-title">
+              <Bolt className="card-icon" />
+              <Typography variant="h6">Sell Energy</Typography>
+            </Box>
             <Typography>
               Create new energy listings and manage your existing ones.
             </Typography>
+            <Button className="glow-button" onClick={() => navigate('/create-listing')}>
+              Sell
+            </Button>
           </Paper>
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Paper className="glow-box clickable" onClick={() => navigate('/view-listings')}>
-            <Typography variant="h6" gutterBottom>
-              Buy Energy
-            </Typography>
+          <Paper className="glass-card buy-section">
+            <Box className="icon-title">
+              <ShoppingCart className="card-icon" />
+              <Typography variant="h6">Buy Energy</Typography>
+            </Box>
             <Typography>
               Browse available energy listings and place bids.
             </Typography>
+            <Button className="glow-button" onClick={() => navigate('/view-listings')}>
+              Buy
+            </Button>
           </Paper>
         </Grid>
       </Grid>

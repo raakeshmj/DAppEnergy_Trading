@@ -1,8 +1,9 @@
-.app-root {
+/* src/styles/App.css */
+body {
+    margin: 0;
     background: linear-gradient(145deg, #000814, #06142e, #000814);
     background-size: 400% 400%;
     animation: backgroundShift 20s ease infinite;
-    min-height: 100vh;
     color: #e0f7ff;
     font-family: 'Orbitron', sans-serif;
     overflow-x: hidden;
@@ -12,6 +13,10 @@
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+  }
+  
+  .app-root {
+    min-height: 100vh;
   }
   
   .hero-section {
@@ -88,5 +93,4 @@
     50% { transform: scale(1.1); filter: drop-shadow(0 0 25px #00d0ff); }
     100% { transform: scale(1); filter: drop-shadow(0 0 10px #00d0ff); }
   }
-  
   

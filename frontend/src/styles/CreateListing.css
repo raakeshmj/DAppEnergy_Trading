@@ -1,0 +1,144 @@
+
+.listing-container {
+  margin-top: 2rem;
+}
+
+.futuristic-paper {
+  padding: 2.5rem;
+  background: rgba(10, 12, 25, 0.88);
+  border-radius: 24px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 255, 255, 0.1);
+  color: #ffffff;
+  animation: fadeIn 0.7s ease-in-out;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.form-title {
+  color: #00eaff;
+  font-weight: 700;
+  margin-left: 0.5rem;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px rgba(0, 246, 255, 0.4);
+}
+
+.header-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.pulse-icon {
+  color: #00f6ff;
+  animation: pulse 2s infinite;
+  font-size: 2rem;
+}
+
+.glass-input .MuiInputBase-root {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 255, 0.15);
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.glass-input .MuiInputBase-input {
+  color: #fff;
+}
+
+.glass-input label {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.checkbox-row {
+  color: #d1faff;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.futuristic-button {
+  background: linear-gradient(135deg, #00e0ff 0%, #006eff 100%);
+  color: #ffffff;
+  border-radius: 16px;
+  font-weight: bold;
+  padding: 0.9rem;
+  text-transform: uppercase;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  box-shadow: 0 0 12px rgba(0, 246, 255, 0.25);
+  transition: all 0.3s ease;
+  animation: neonPulse 3s ease-in-out infinite;
+  text-shadow: 0 0 2px #000000;
+}
+
+.futuristic-button:hover {
+  background: linear-gradient(135deg, #00bfff 0%, #0051ff 100%);
+  box-shadow: 0 0 22px rgba(0, 246, 255, 0.4);
+  transform: scale(1.02);
+}
+
+.futuristic-button:disabled {
+  background: #444;
+  color: #aaa;
+  box-shadow: none;
+  animation: none;
+}
+
+.button-loading {
+  opacity: 0.7;
+}
+
+.lightning-flash {
+  animation: flashOnce 0.6s ease-in-out;
+}
+
+/* Animations */
+@keyframes flashOnce {
+  0% {
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(0, 255, 255, 0.9);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes neonPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 246, 255, 0.2), 0 0 20px rgba(0, 246, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 246, 255, 0.5), 0 0 35px rgba(0, 246, 255, 0.3);
+  }
+}

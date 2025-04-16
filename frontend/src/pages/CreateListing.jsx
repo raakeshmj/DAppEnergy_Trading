@@ -1,11 +1,22 @@
-import React from'react';
-import { useState,useEffect } from 'react';
-import { Container, Paper, Typography, TextField, Button, Box, Alert, CircularProgress } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import {
+  Container,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Box,
+  Alert,
+  CircularProgress
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useContracts } from '../context/ContractContext';
+import { FlashOn, EnergySavingsLeaf } from '@mui/icons-material';
+import '../styles/CreateListing.css';
 
 const CreateListing = ({ web3, account }) => {
-  const { tradingPlatform, userRegistry, loading: contractLoading, error: contractError } = useContracts();  const [energyAmount, setEnergyAmount] = useState('');
+  const { tradingPlatform, userRegistry } = useContracts();
+  const [energyAmount, setEnergyAmount] = useState('');
   const [pricePerUnit, setPricePerUnit] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -35,17 +46,16 @@ const CreateListing = ({ web3, account }) => {
       setError('Please provide a name and select at least one role');
       return;
     }
-  
+
     setLoading(true);
     try {
       await userRegistry.methods
         .registerUser(name, isProducer, isConsumer)
         .send({ from: account });
-  
+
       setShowRegisterForm(false);
-      handleSubmit(new Event('submit')); // Re-attempt listing creation
+      handleSubmit(new Event('submit'));
     } catch (err) {
-      console.error('Registration failed:', err);
       setError(err.message || 'Registration failed');
     } finally {
       setLoading(false);
@@ -65,53 +75,40 @@ const CreateListing = ({ web3, account }) => {
     }
 
     if (!tradingPlatform || !userRegistry) {
-      console.error('Contracts not initialized');
       throw new Error('Contracts not initialized');
-    }else{
-      console.log('Contracts initialized');
     }
-
-    console.log('Energy Amount:', energyAmount);
-    console.log('Price per Unit:', pricePerUnit);
-
 
     setLoading(true);
     setError('');
-    
-    try {
-      if (!tradingPlatform) {
-        throw new Error('Trading platform contract not initialized');
-      }
 
+    try {
       const isRegistered = await userRegistry.methods.isRegisteredUser(account).call();
-        
       if (!isRegistered) {
         setShowRegisterForm(true);
         setLoading(false);
         return;
       }
 
-      // Convert energy amount and price to Wei
       const energyAmountWei = web3.utils.toWei(energyAmount, 'ether');
       const pricePerUnitWei = web3.utils.toWei(pricePerUnit, 'ether');
 
-
-      // Create listing
       await tradingPlatform.methods
         .createListing(energyAmountWei, pricePerUnitWei)
-        .send({ 
+        .send({
           from: account,
           gas: 5000000,
-          gasPrice: await web3.eth.getGasPrice()
-         });
+          gasPrice: await web3.eth.getGasPrice(),
+        });
 
       setSuccess(true);
-      setTimeout(() => {
-        navigate('/view-listings');
-      }, 2000);
-    } catch (error) {
-      console.error('Error creating listing:', error);
-      setError(error.message || 'Error creating listing');
+      const button = document.querySelector('.futuristic-button');
+      if (button) {
+        button.classList.add('lightning-flash');
+        setTimeout(() => button.classList.remove('lightning-flash'), 1000);
+      }
+      setTimeout(() => navigate('/view-listings'), 2000);
+    } catch (err) {
+      setError(err.message || 'Error creating listing');
     } finally {
       setLoading(false);
     }
@@ -120,31 +117,23 @@ const CreateListing = ({ web3, account }) => {
   if (!web3 || !account) {
     return (
       <Container maxWidth="sm" sx={{ mt: 4 }}>
-        <Alert severity="warning">
-          Please connect your wallet to create an energy listing
-        </Alert>
+        <Alert severity="warning">Please connect your wallet to create a listing.</Alert>
       </Container>
     );
   }
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Paper sx={{ p: 4 }}>
-        <Typography variant="h5" gutterBottom>
-          {showRegisterForm ? 'Register to Continue' : 'Create Energy Listing'}
-        </Typography>
+    <Container maxWidth="sm" className="listing-container">
+      <Paper className="futuristic-paper">
+        <Box className="header-box">
+          <FlashOn className="pulse-icon" />
+          <Typography variant="h4" className="form-title">
+            {showRegisterForm ? 'Register to Continue' : 'Create Listing'}
+          </Typography>
+        </Box>
 
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
-
-        {success && (
-          <Alert severity="success" sx={{ mb: 2 }}>
-            Listing created successfully! Redirecting...
-          </Alert>
-        )}
+        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        {success && <Alert severity="success" sx={{ mb: 2 }}>Listing created successfully!</Alert>}
 
         {showRegisterForm ? (
           <Box>
@@ -154,32 +143,18 @@ const CreateListing = ({ web3, account }) => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               margin="normal"
-              required
+              className="glass-input"
             />
-            <Box display="flex" justifyContent="space-between" mt={2}>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={isProducer}
-                  onChange={() => setIsProducer(!isProducer)}
-                />
-                Producer
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={isConsumer}
-                  onChange={() => setIsConsumer(!isConsumer)}
-                />
-                Consumer
-              </label>
+            <Box display="flex" justifyContent="space-between" mt={2} className="checkbox-row">
+              <label><input type="checkbox" checked={isProducer} onChange={() => setIsProducer(!isProducer)} /> Producer</label>
+              <label><input type="checkbox" checked={isConsumer} onChange={() => setIsConsumer(!isConsumer)} /> Consumer</label>
             </Box>
             <Button
-              variant="contained"
-              onClick={handleRegister}
               fullWidth
-              sx={{ mt: 3 }}
+              onClick={handleRegister}
+              className="futuristic-button"
               disabled={loading}
+              startIcon={<EnergySavingsLeaf />}
             >
               {loading ? <CircularProgress size={24} /> : 'Register & Continue'}
             </Button>
@@ -194,9 +169,8 @@ const CreateListing = ({ web3, account }) => {
               onChange={(e) => setEnergyAmount(e.target.value)}
               margin="normal"
               required
-              inputProps={{ min: '0', step: '0.0001' }}
+              className="glass-input"
             />
-
             <TextField
               fullWidth
               label="Price per Unit (ETH)"
@@ -205,16 +179,15 @@ const CreateListing = ({ web3, account }) => {
               onChange={(e) => setPricePerUnit(e.target.value)}
               margin="normal"
               required
-              inputProps={{ min: '0', step: '0.0001' }}
+              className="glass-input"
             />
-
-            <Box sx={{ mt: 3 }}>
+            <Box mt={3}>
               <Button
                 type="submit"
-                variant="contained"
                 fullWidth
+                className={`futuristic-button ${loading ? 'button-loading' : ''}`}
                 disabled={loading}
-                sx={{ height: 48 }}
+                startIcon={<FlashOn />}
               >
                 {loading ? <CircularProgress size={24} /> : 'Create Listing'}
               </Button>
