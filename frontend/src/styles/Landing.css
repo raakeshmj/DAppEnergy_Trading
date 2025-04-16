@@ -1,0 +1,142 @@
+/* src/styles/Landing.css */
+@import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
+.landing-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #0a0d1c;
+    color: #ffffff;
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  .hero-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .convert-icon {
+    width: 40px;
+    height: auto;
+    margin: 0 1rem;
+  }
+  
+  .spark-logo {
+    width: 60px;
+    height: auto;
+  }
+  
+  .highlight-text {
+    color: #00d0ff;
+  }
+  
+  .subtext {
+    max-width: 600px;
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 1rem;
+    color: #cfd8dc;
+  }
+  
+  .cta-button {
+    padding: 0.75rem 2rem;
+    margin-top: 1rem;
+    font-size: 1rem;
+    background: linear-gradient(90deg, #00d0ff, #0047ff);
+    border: none;
+    border-radius: 50px;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 12px #00d0ff;
+    transition: 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #00f0ff;
+  }
+  
+  .how-to-title {
+    font-size: 2rem;
+    margin: 3rem 0 1rem;
+    text-align: center;
+    color: #b0dfff;
+  }
+  
+  .how-to-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding-bottom: 3rem;
+  }
+  
+  .step-card {
+    background-color: #111827;
+    border: 2px solid #00d0ff;
+    border-radius: 20px;
+    padding: 1.5rem;
+    width: 280px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 0 10px #00d0ff;
+    transition: 0.3s ease;
+  }
+  
+  .step-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px #00f0ff;
+  }
+  
+  .step-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #00d0ff;
+    margin-bottom: 0.5rem;
+  }
+  
+  .step-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .step-desc {
+    font-size: 0.95rem;
+    color: #cfd8dc;
+  }
+  .degenwatts-title {
+    font-family: 'Zen Dots', sans-serif;
+    color: #00f0ff;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 3rem;
+    font-weight: 400;
+    text-shadow:
+      0 0 5px #00f0ff,
+      0 0 10px #00f0ff,
+      0 0 20px #00f0ff,
+      0 0 40px #00f0ff;
+    animation: glowPulse 2.5s infinite ease-in-out;
+  }
+  
+
+@keyframes glowPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 5px #00f0ff,
+      0 0 10px #00f0ff,
+      0 0 20px #00f0ff,
+      0 0 40px #00f0ff;
+  }
+  50% {
+    text-shadow:
+      0 0 2px #00c0ff,
+      0 0 6px #00c0ff,
+      0 0 12px #00c0ff,
+      0 0 24px #00c0ff;
+  }
+}
