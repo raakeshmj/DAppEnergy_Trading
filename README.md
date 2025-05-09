@@ -1,62 +1,70 @@
-# P2P Energy Trading Platform
+⚡ P2P Energy Trading Platform
+A decentralized, blockchain-powered platform enabling prosumers (producers + consumers) to seamlessly trade energy using smart contracts. Built with Solidity, the Truffle Suite, and an ERC20-based energy token.
 
-A blockchain-based peer-to-peer energy trading platform that enables prosumers to trade energy tokens directly with each other. Built using Solidity smart contracts and Truffle framework.
+🚀 Key Features
+🔋 ERC20 Energy Token (ENRG) – Tokenized energy units for trading
 
-## Features
+👥 User Registration – Onboard as a producer or consumer
 
-- ERC20-based Energy Token (ENRG) for representing energy units
-- User registration system for energy producers and consumers
-- P2P energy trading marketplace with listing and bidding functionality
-- Reputation system for users
-- Secure transaction settlement and payment processing
+🏷️ Marketplace – List, browse, and bid on energy offers
 
-## Smart Contracts
+🌟 Reputation System – Track and reward trustworthy users
 
-1. **EnergyToken.sol**: ERC20 token contract for representing energy units
-2. **UserRegistry.sol**: Manages user profiles and roles (producer/consumer)
-3. **EnergyTradingPlatform.sol**: Core trading platform for energy exchange
+🔐 Secure Transactions – Blockchain-backed settlements & payments
 
-## Prerequisites
+🧠 Smart Contract Architecture
+EnergyToken.sol – ERC20 token contract for ENRG
 
-- Node.js (v14 or higher)
-- Truffle Suite
-- Ganache (for local blockchain)
+UserRegistry.sol – Manages user roles, identity, and registration
 
-## Setup
+EnergyTradingPlatform.sol – The core trading engine handling listings, bids, and trades
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
+🔧 Prerequisites
+Node.js (v14 or above)
 
-2. Start Ganache:
-   - Launch Ganache
-   - Create a new workspace
-   - Configure RPC Server to run on `HTTP://127.0.0.1:8545`
+Truffle
 
-3. Deploy contracts:
-   ```bash
-   truffle migrate --reset
-   ```
+Ganache (for local blockchain testing)
 
-## Usage
+⚙️ Getting Started
+1. Install Dependencies
+bash
+Copy
+Edit
+npm install
+2. Start Ganache
+Open Ganache and create a new workspace
 
-1. Register as a user (producer or consumer)
-2. If you're a producer:
-   - Create energy listings with amount and price
-   - Accept bids from consumers
-3. If you're a consumer:
-   - Browse active energy listings
-   - Place bids on listings
-   - Receive energy tokens upon successful trades
+Set RPC server to: HTTP://127.0.0.1:8545
 
-## Testing
+3. Compile & Deploy Smart Contracts
+bash
+Copy
+Edit
+truffle migrate --reset
+💡 How It Works
+✅ Register
+Sign up as either a producer or a consumer
 
-Run the test suite:
-```bash
+🔄 If You’re a Producer:
+List energy tokens with a custom price
+
+Accept bids from interested consumers
+
+📥 If You’re a Consumer:
+Browse active listings
+
+Place bids on available energy offers
+
+Receive ENRG tokens after trade confirmation
+
+🧪 Running Tests
+Run the full test suite:
+
+bash
+Copy
+Edit
 truffle test
-```
+📄 License
+This project is licensed under the MIT License.
 
-## License
-
-MIT
