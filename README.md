@@ -45,3 +45,18 @@ npm install
 ```bash
 truffle migrate --reset
 
+```
+## 💡 How It Works
+
+### ✅ Register
+Sign up as either a **producer** or a **consumer**.
+
+### 🔄 If You’re a Producer
+- Create energy listings with the amount and price
+- Accept bids from consumers
+
+### 📥 If You’re a Consumer
+- Browse active energy listings
+- Place bids on offers
+- Receive ENRG tokens after successful trades
+
