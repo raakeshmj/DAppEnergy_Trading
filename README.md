@@ -60,3 +60,9 @@ Sign up as either a **producer** or a **consumer**.
 - Place bids on offers
 - Receive ENRG tokens after successful trades
 
+## 🧪 Running Tests
+
+Run the full test suite:
+```bash
+truffle test
+
