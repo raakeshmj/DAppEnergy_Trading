@@ -36,3 +36,12 @@ A decentralized, blockchain-powered platform enabling **prosumers** (producers +
 ```bash
 npm install
 
+```
+### 2. Start Ganache
+- Open Ganache and create a new workspace  
+- Set the RPC server to: `HTTP://127.0.0.1:8545`
+
+### 3. Compile & Deploy Smart Contracts
+```bash
+truffle migrate --reset
+
