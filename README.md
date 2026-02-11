@@ -1,20 +1,20 @@
-# ⚡ P2P Energy Trading Platform
+# P2P Energy Trading Platform
 
 A decentralized, blockchain-powered platform enabling **prosumers** (producers + consumers) to seamlessly trade energy using smart contracts. Built with **Solidity**, the **Truffle Suite**, and an ERC20-based energy token.
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
-- 🔋 **ERC20 Energy Token (ENRG)** – Tokenized energy units for trading  
-- 👥 **User Registration** – Onboard as a producer or consumer  
-- 🏷️ **Marketplace** – List, browse, and bid on energy offers  
-- 🌟 **Reputation System** – Track and reward trustworthy users  
-- 🔐 **Secure Transactions** – Blockchain-backed settlements & payments  
+-  **ERC20 Energy Token (ENRG)** – Tokenized energy units for trading  
+-  **User Registration** – Onboard as a producer or consumer  
+-  **Marketplace** – List, browse, and bid on energy offers  
+-  **Reputation System** – Track and reward trustworthy users  
+- **Secure Transactions** – Blockchain-backed settlements & payments  
 
 ---
 
-## 🧠 Smart Contract Architecture
+## Smart Contract Architecture
 
 1. **`EnergyToken.sol`** – ERC20 token contract for ENRG  
 2. **`UserRegistry.sol`** – Manages user roles, identity, and registration  
@@ -22,7 +22,7 @@ A decentralized, blockchain-powered platform enabling **prosumers** (producers +
 
 ---
 
-## 🔧 Prerequisites
+## Prerequisites
 
 - [Node.js](https://nodejs.org/) (v14 or above)  
 - [Truffle](https://trufflesuite.com/truffle/)  
@@ -30,7 +30,7 @@ A decentralized, blockchain-powered platform enabling **prosumers** (producers +
 
 ---
 
-## ⚙️ Getting Started
+##  Getting Started
 
 ### 1. Install Dependencies
 ```bash
@@ -46,21 +46,21 @@ npm install
 truffle migrate --reset
 
 ```
-## 💡 How It Works
+## How It Works
 
-### ✅ Register
+### Register
 Sign up as either a **producer** or a **consumer**.
 
-### 🔄 If You’re a Producer
+### If You’re a Producer
 - Create energy listings with the amount and price
 - Accept bids from consumers
 
-### 📥 If You’re a Consumer
+### If You’re a Consumer
 - Browse active energy listings
 - Place bids on offers
 - Receive ENRG tokens after successful trades
 
-## 🧪 Running Tests
+## Running Tests
 
 Run the full test suite:
 ```bash
